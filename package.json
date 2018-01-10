@@ -1,5 +1,5 @@
 {
-  "name": "newman-reporter-basicText",
+  "name": "newman-reporter-basic-text",
   "version": "0.0.1",
   "description": "a basic text based reporter for newman",
   "keywords": [
