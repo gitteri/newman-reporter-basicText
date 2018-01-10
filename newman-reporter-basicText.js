@@ -2,7 +2,7 @@ module.exports = function(newman, repoterOptions) {
     console.log('Running!');
 
     let basicOutput = '';
-    let newmanCollection = options.collection;
+    let newmanCollection = reporterOptions.collection;
 
     newman.on('start', () => {
         basicOutput += `Start collection run for collection "${newmanCollection.name}" (${newmanCollection.id})\n`;
