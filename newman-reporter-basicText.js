@@ -1,4 +1,4 @@
-module.exports = function(newman, repoterOptions) {
+module.exports = function(newman, reporterOptions) {
     console.log('Running!');
 
     let basicOutput = '';
