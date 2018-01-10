@@ -1,11 +1,18 @@
 module.exports = function(newman, reporterOptions) {
-    console.log('Running!');
-
-    let basicOutput = '';
+    var basicOutput = '';
+    var useCli = reporterOptions.cli && reporterOptions.cli === 'true';
     let newmanCollection = reporterOptions.collection;
+    
+    function log(str) {
+        if (useCli) {
+            process.stdout.write(str);
+        } else {
+            basicOutput += str;
+        }
+    }
 
     newman.on('start', () => {
-        basicOutput += `Start collection run\n`;
+        log(`Start collection run\n`);
         this.count = 1;
     });
 
@@ -19,9 +26,9 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('assertion', (err, o) => {
         if (err) {
-            basicOutput += `✗ Assertion failed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`;
+            log(`✗ Assertion failed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
         } else {
-            basicOutput += ` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`;
+            log(` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
         }
 
         this.count++;
@@ -33,7 +40,7 @@ module.exports = function(newman, reporterOptions) {
             return;
         }
 
-        basicOutput += `Collection run completed for collection: ${this.count} tests executed\n`;
+        log(`Collection run completed for collection: ${this.count} tests executed\n`);
         newman.exports.push({
             name: 'basic-reporter',
             default: 'newman-run-report.txt',
