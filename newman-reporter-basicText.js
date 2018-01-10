@@ -5,7 +5,7 @@ module.exports = function(newman, reporterOptions) {
     let newmanCollection = reporterOptions.collection;
 
     newman.on('start', () => {
-        basicOutput += `Start collection run for collection "${newmanCollection.name}" (${newmanCollection.id})\n`;
+        basicOutput += `Start collection run\n`;
         this.count = 1;
     });
 
@@ -33,7 +33,7 @@ module.exports = function(newman, reporterOptions) {
             return;
         }
 
-        basicOutput += `Collection run completed for collection "${newmanCollection.name}" (${newmanCollection.id}):  ${this.count} tests executed\n`;
+        basicOutput += `Collection run completed for collection: ${this.count} tests executed\n`;
         newman.exports.push({
             name: 'basic-reporter',
             default: 'newman-run-report.txt',
