@@ -1,0 +1,24 @@
+{
+  "name": "newman-reporter-basicText",
+  "version": "0.0.1",
+  "description": "a basic text based reporter for newman",
+  "keywords": [
+    "postman",
+    "newman"
+  ],
+  "main": "newman-reporter-basicText.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gitteri/newman-reporter-basicText.git"
+  },
+  "directories": {
+  },
+  "dependencies": {
+    "newman": "^3.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}
