@@ -45,8 +45,7 @@ module.exports = function (options, done) {
         path.dir = 'newman';
 
         // append timestamp
-        path.name = `${path.name}-${timestamp()}0`; // @todo make -0 become incremental if file name exists
-        path.base = path.name + path.ext;
+        path.base = path.name + '-';
     }
     // final check that path is valid
     if (!(path && path.base)) {
@@ -54,7 +53,7 @@ module.exports = function (options, done) {
     }
 
     // now sore the unparsed result back for quick re-use during writing and a single place for unparsing
-    path.unparsed = joinPath(path.dir, path.base);
+    path.unparsed = joinPath(path.dir, path.base, timestamp(), path.ext);
 
     // in case the path has a directory, ensure that the directory is available
     if (path.dir) {
