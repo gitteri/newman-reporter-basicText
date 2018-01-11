@@ -55,7 +55,7 @@ module.exports = function (options, done) {
     }
 
     // now sore the unparsed result back for quick re-use during writing and a single place for unparsing
-    path.unparsed = joinPath(path.dir, `${path.base}-${timestamp()}`, path.ext);
+    path.unparsed = joinPath(path.dir, `${path.base}-${timestamp()}.${path.ext}`);
 
     // in case the path has a directory, ensure that the directory is available
     if (path.dir) {
