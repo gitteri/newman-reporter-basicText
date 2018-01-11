@@ -71,22 +71,22 @@ module.exports = function (options, done) {
             }
 
             fs.appendFile(path.unparsed, content, function (err) {
-                err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
+                if (err) err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
                 if (done) {
                     done(err, path);
                 } else {
-                    console.log(err);
+                    if (err) console.log(err);
                 }
             });
         });
     }
     else {
         fs.appendFile(path.unparsed, content, function (err) {
-            err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
+            if (err) err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
             if (done) {
                 done(err, path);
             } else {
-                console.log(err);
+                if (err) console.log(err);
             }
         });
     }
