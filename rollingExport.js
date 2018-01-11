@@ -50,6 +50,7 @@ module.exports = function (options, done) {
     }
     // final check that path is valid
     if (!(path && path.base)) {
+        console.log(`path ${path.base} is not valid`)
         return;
     }
 
@@ -64,20 +65,29 @@ module.exports = function (options, done) {
                 if (done) {
                     return done(err, path);
                 } else {
+                    console.log(err);
                     return err;
                 }
             }
 
             fs.appendFile(path.unparsed, content, function (err) {
                 err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
-                if (done) done(err, path);
+                if (done) {
+                    done(err, path);
+                } else {
+                    console.log(err);
+                }
             });
         });
     }
     else {
         fs.appendFile(path.unparsed, content, function (err) {
             err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
-            if (done) done(err, path);
+            if (done) {
+                done(err, path);
+            } else {
+                console.log(err);
+            }
         });
     }
 };

@@ -2,15 +2,14 @@ const exportFile = require('./rollingExport');
 
 module.exports = function(newman, reporterOptions) {
     var basicOutput = '';
+    let useRolling = reporterOptions.rolling && reporterOptions.rolling === 'true';
+    let useExport = reporterOptions.export && typeof reporterOptions.export === 'string';
     var useCli = reporterOptions.cli && reporterOptions.cli === 'true';
     let newmanCollection = reporterOptions.collection;
 
     function log(str) {
-        if (useCli) {
-            process.stdout.write(str);
-        } else {
-            basicOutput += str;
-        }
+        if (useRolling || useExport) basicOutput += str;
+        if (useCli) process.stdout.write(str);
     }
 
     // Add time length for all tests
@@ -54,6 +53,7 @@ module.exports = function(newman, reporterOptions) {
         };
 
         if (reporterOptions.rolling) {
+            options.default = 'newman-run-report',
             exportFile(options)
         } else {
             newman.exports.push(options);
