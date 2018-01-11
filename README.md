@@ -1,10 +1,12 @@
 # Basic text reporter for Newman
 
 ## Installation
-`npm install newman-reporter-text`
+Run `npm install --save newman-reporter-text`
 
 ## Usage
 In order to use this custom reporter, simply add 'text' to the list of reporters. This text reporter also accepts two options, an export location and a cli option. If you'd like newman to output the results of the collection to a file, enter the file name under the 'export' property. If you'd like newman to output the results of the collection to stdout, set the 'cli' property as 'true' (string not bool).
+
+Note that you do not have to do `require('newman-reporter-text')` anywhere as newman will automatically require the package when the collection is run.
 
 ```
 newman.run({
