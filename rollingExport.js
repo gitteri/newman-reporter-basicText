@@ -20,7 +20,7 @@ const E = '';
  */
 const timestamp = function (date) {
     // use the iso string to ensure left padding and other stuff is taken care of
-    return (date || new Date()).toISOString().split('T')[0];
+    return (date || new Date()).toISOString().split('T')[0].replace(/-/g, '');
 };
 
 /**
