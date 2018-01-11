@@ -1,8 +1,10 @@
+const exportFile = require('./rollingExport');
+
 module.exports = function(newman, reporterOptions) {
     var basicOutput = '';
     var useCli = reporterOptions.cli && reporterOptions.cli === 'true';
     let newmanCollection = reporterOptions.collection;
-    
+
     function log(str) {
         if (useCli) {
             process.stdout.write(str);
@@ -11,8 +13,9 @@ module.exports = function(newman, reporterOptions) {
         }
     }
 
+    // Add time length for all tests
     newman.on('start', () => {
-        log(`Start collection run\n`);
+        log(`Start collection run at ${new Date()}\n`);
         this.count = 1;
     });
 
@@ -41,11 +44,19 @@ module.exports = function(newman, reporterOptions) {
         }
 
         log(`Collection run completed for collection: ${this.count} tests executed\n`);
-        newman.exports.push({
+
+        // Export to a single file based on rolling option
+        let options = {
             name: 'basic-reporter',
             default: 'newman-run-report.txt',
             path: reporterOptions.export,
             content: basicOutput
-        });
+        };
+
+        if (reporterOptions.rolling) {
+            exportFile(options)
+        } else {
+            newman.exports.push(options);
+        }
     });
 }
