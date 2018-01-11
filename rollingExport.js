@@ -3,25 +3,25 @@ const mkdirp = require('mkdirp');
 const parsePath = require('path').parse;
 const joinPath = require('path').join;
 
-    /**
-     * The root path specifier
-     *
-     * @const
-     * @private
-     * @type {string}
-     */
-    E = '',
+/**
+ * The root path specifier
+ *
+ * @const
+ * @private
+ * @type {string}
+ */
+const E = '';
 
-    /**
-     * Generate a timestamp from date
-     *
-     * @param {Date=} date - The timestmap used to mark the exported file.
-     * @returns {String} - yyyy-mm-dd
-     */
-    timestamp = function (date) {
-        // use the iso string to ensure left padding and other stuff is taken care of
-        return (date || new Date()).toISOString().split('T')[0];
-    };
+/**
+ * Generate a timestamp from date
+ *
+ * @param {Date=} date - The timestmap used to mark the exported file.
+ * @returns {String} - yyyy-mm-dd
+ */
+const timestamp = function (date) {
+    // use the iso string to ensure left padding and other stuff is taken care of
+    return (date || new Date()).toISOString().split('T')[0];
+};
 
 /**
  * Module whose job is to export a file which is in an export format.
@@ -61,19 +61,23 @@ module.exports = function (options, done) {
         mkdirp(path.dir, function (err) {
             if (err) {
                 err.help = `error creating path for file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
-                return done(err, path);
+                if (done) {
+                    return done(err, path);
+                } else {
+                    return err;
+                }
             }
 
             fs.appendFile(path.unparsed, content, function (err) {
                 err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
-                done(err, path);
+                if (done) done(err, path);
             });
         });
     }
     else {
         fs.appendFile(path.unparsed, content, function (err) {
             err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
-            done(err, path);
+            if (done) done(err, path);
         });
     }
 };
