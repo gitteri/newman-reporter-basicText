@@ -33,12 +33,12 @@ const joinPath = require('path').join;
  */
 module.exports = function (options, done) {
     // parse the path if one is available as string
-    let path = _.isString(options.path) && parsePath(options.path);
+    let path = (typeof options.path === 'string') && parsePath(options.path);
     let content = options.content || E;
 
     // if a path was not provided by user, we need to prepare the default path, but create the default path only if one
     // is provided.
-    if (!path && _.isString(options.default)) {
+    if (!path && (typeof options.default === 'string')) {
         path = parsePath(options.default);
         // delete the path and directory if one is detected when parsing defaults
         path.root = E;
@@ -59,20 +59,20 @@ module.exports = function (options, done) {
     if (path.dir) {
         mkdirp(path.dir, function (err) {
             if (err) {
-                return done(_.set(err, 'help',
-                    `error creating path for file "${path.unparsed}" for ${options.name || 'unknown-source'}`));
+                err.help = `error creating path for file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
+                return done(err, path);
             }
 
             fs.appendFile(path.unparsed, content, function (err) {
-                done(_.set(err, 'help',
-                    `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`), path);
+                err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
+                done(err, path);
             });
         });
     }
     else {
         fs.appendFile(path.unparsed, content, function (err) {
-            done(_.set(err, 'help',
-                `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`), path);
+            err.help = `error writing file "${path.unparsed}" for ${options.name || 'unknown-source'}`;
+            done(err, path);
         });
     }
 };
