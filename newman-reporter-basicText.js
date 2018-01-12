@@ -61,8 +61,7 @@ module.exports = function(newman, reporterOptions) {
             content: basicOutput
         };
 
-        if (reporterOptions.rolling) {
-            options.default = 'newman-run-report',
+        if (useRolling) {
             exportFile(options)
         } else {
             newman.exports.push(options);

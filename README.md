@@ -43,5 +43,5 @@ newman run ./tests.postman_collection.json --reporter text --reporter-text-expor
 < ✔ Assertion passed! [1 / 3] "User successfully logged in" (duration 312) ms"
 < ✔ Assertion passed! [2 / 3] "User profile should exist for user" (duration 229) ms"
 < ✗ Assertion failed! [3 / 3] "No results in elastic search (ADMIN view)" (duration 108) ms"
-< Collection run completed for collection: 3 tests executed\n
+< Collection run completed for collection: 3 tests executed
 ```
