@@ -1,10 +1,15 @@
 const exportFile = require('./rollingExport');
 
+function isTrue(bool) {
+    return bool && ((typeof(bool) === "boolean" && bool) || bool === 'true');
+}
+
 module.exports = function(newman, reporterOptions) {
     var basicOutput = '';
-    let useRolling = reporterOptions.rolling && reporterOptions.rolling === 'true';
+    typeof(variable) === "boolean"
+    var useCli = isTrue(reporterOptions.cli);
+    let useRolling = isTrue(reporterOptions.rolling);
     let useExport = reporterOptions.export && typeof reporterOptions.export === 'string';
-    var useCli = reporterOptions.cli && reporterOptions.cli === 'true';
     let newmanCollection = reporterOptions.collection;
 
     function log(str) {
@@ -28,13 +33,16 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('assertion', (err, o) => {
         if (err) {
-            log(`✗ Assertion failed! [${this.count} / ${this.tests}] ${o.item.name} at ${new Date()}: "${o.assertion}"\n`);
-            log('BEGIN JSON RESPONSE\n');
-            log('HEADERS:\n' + JSON.stringify(o.item));
-            // log('BODY:\n' + JSON.stringify(o.item));
-            log('END JSON RESPONSE\n');
+            log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
+            log('URL PATH: ' + o.item.request.url.path.join('/') + '\n');
+            if (o.item.response) {
+                log('BEGIN JSON RESPONSE\n');
+                log('CODE:\n' + o.item.response[0].code);
+                log('BODY:\n' + JSON.stringify(o.item.response[0].body));
+                log('END JSON RESPONSE\n');
+            }
         } else {
-            log(` ✔ Assertion passed! [${this.count} / ${this.tests}]: ${o.item.name} "${o.assertion}"\n`);
+            log(` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
         }
 
         this.count++;
