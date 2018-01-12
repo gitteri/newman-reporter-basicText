@@ -37,10 +37,8 @@ module.exports = function(newman, reporterOptions) {
             log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
             log('URL PATH: ' + o.item.request.url.path.join('/') + '\n');
             if (responses && responses.length > 0) {
-                log('BEGIN JSON RESPONSE\n');
-                log('CODE:\n' + responses[0].code);
-                log('BODY:\n' + responses[0].body);
-                log('END JSON RESPONSE\n');
+                log('CODE: ' + responses[0].code + '\n');
+                log('BODY: ' + responses[0].body + '\n');
             }
         } else {
             log(` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
