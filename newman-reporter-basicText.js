@@ -33,14 +33,13 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('assertion', (err, o) => {
         if (err) {
+            let responses = JSON.parse(JSON.stringify(o.item.responses));
             log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
             log('URL PATH: ' + o.item.request.url.path.join('/') + '\n');
-            log(JSON.stringify(o.item.responses));
-            log('typeof responses = ' + typeof o.item.responses);
-            if (o.item.responses && o.item.responses.length > 0) {
+            if (responses && responses.length > 0) {
                 log('BEGIN JSON RESPONSE\n');
-                log('CODE:\n' + o.item.responses[0].code);
-                log('BODY:\n' + JSON.stringify(o.item.responses[0].body));
+                log('CODE:\n' + responses[0].code);
+                log('BODY:\n' + responses[0].body);
                 log('END JSON RESPONSE\n');
             }
         } else {
