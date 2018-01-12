@@ -22,16 +22,15 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('beforeRequest', (err, o) => { });
 
-    newman.on('request', (err, o) => {
-        log(JSON.stringify(o))
-    });
+    newman.on('request', (err, o) => { });
 
     newman.on('script', (err, o) => { });
 
     newman.on('assertion', (err, o) => {
         if (err) {
             log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
-            log(`Message:\n${JSON.stringify(o)}\n`);
+            log(`Message:\n${err.message}\n`);
+            log(`Stack:\n${err.stack}\n`);
         } else {
             log(` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
         }
