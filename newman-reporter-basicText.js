@@ -35,11 +35,11 @@ module.exports = function(newman, reporterOptions) {
         if (err) {
             log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
             log('URL PATH: ' + o.item.request.url.path.join('/') + '\n');
-            log('item: ' + Object.keys(o.item).join(', '));
-            if (o.item.response) {
+            log('item: ' + JSON.stringify(o.item.responses));
+            if (o.item.responses) {
                 log('BEGIN JSON RESPONSE\n');
-                log('CODE:\n' + o.item.response[0].code);
-                log('BODY:\n' + JSON.stringify(o.item.response[0].body));
+                log('CODE:\n' + o.item.responses[0].code);
+                log('BODY:\n' + JSON.stringify(o.item.responses[0].body));
                 log('END JSON RESPONSE\n');
             }
         } else {
