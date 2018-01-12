@@ -22,13 +22,22 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('beforeRequest', (err, o) => { });
 
-    newman.on('request', (err, o) => { });
+    newman.on('request', (err, o) => {
+        if (o.statusCode < 200 || o.statusCode > 300) {
+            log("✗ Request failed!\nResponse headers:\n" +
+                JSON.stringify(o.headers, undefined, 1) +
+                "\nResponse body:\n" + o.body + "\n"
+            );
+        }
+    });
 
     newman.on('script', (err, o) => { });
 
     newman.on('assertion', (err, o) => {
         if (err) {
-            log(`✗ Assertion failed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
+            log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
+            log(`Message:\n${o.message}\n`);
+            log(`Stack:\n${o.stack}\n`);
         } else {
             log(` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
         }
