@@ -28,11 +28,13 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('assertion', (err, o) => {
         if (err) {
-            log(`✗ Assertion failed! [${this.count} / ${o.item.name}] at ${new Date()}: "${o.assertion}"\n`);
-            log(`Message:\n${err.message}\n`);
-            log(`Stack:\n${err.stack}\n`);
+            log(`✗ Assertion failed! [${this.count} / ${this.tests}] ${o.item.name} at ${new Date()}: "${o.assertion}"\n`);
+            log('BEGIN JSON RESPONSE\n');
+            log('HEADERS:\n' + JSON.stringify(o.item.response.header));
+            log('BODY:\n' + JSON.stringify(o.item.response.body));
+            log('END JSON RESPONSE\n');
         } else {
-            log(` ✔ Assertion passed! [${this.count} / ${o.item.name}]: "${o.assertion}"\n`);
+            log(` ✔ Assertion passed! [${this.count} / ${this.tests}]: ${o.item.name} "${o.assertion}"\n`);
         }
 
         this.count++;
