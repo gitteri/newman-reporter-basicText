@@ -27,7 +27,14 @@ module.exports = function(newman, reporterOptions) {
 
     newman.on('beforeRequest', (err, o) => { });
 
-    newman.on('request', (err, o) => { });
+    newman.on('request', (err, o) => {
+      if (err) {
+        console.log(JSON.stringify(err));
+      }
+      if (o) {
+        console.log(JSON.stringify(o));
+      }
+    });
 
     newman.on('script', (err, o) => { });
 
