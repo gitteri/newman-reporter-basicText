@@ -23,7 +23,7 @@ newman.run({
             // Take output and save it to file
             export: `./logs/${startTime}.txt`,
             // Output to rolling file based on current day
-            rolling: 'ture',
+            rolling: 'true',
             // Output the results to stdout
             cli: 'true'
         }
